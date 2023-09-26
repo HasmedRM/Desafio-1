@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+
+  srand(time(NULL));
+  unsigned armario = 0;
+  unsigned menu = 0;
+  int armarioAleato;
+  do {
+    
+  printf("Você deseja\n1- Ocupar um armário\n2- Liberar um Armário  \n3- Sair.\n");
+  scanf("%u",&menu);
+
+  switch(menu) {
+    case 1: // Liberar Armario
+     if (armario == 255) {
+                    printf("Todos os armários estão ocupados.\n");
+                } else {
+                    do {
+                        armarioAleato = rand() % 8;
+                    } while (armario & (1 << armarioAleato));
+                    armario |= (1 << armarioAleato);
+                    printf("Armário %d foi ocupado.\n", armarioAleato + 1);
+                }
+                break;
+    case 2: // ocupar Armario
+        if (armario == 0) {
+                    printf("Todos os armários estão livres\n");
+                } else {
+                  printf("Digite o número do armário a ser liberado entre 1 e 8: ");
+                    scanf("%d", &armarioAleato);
+                    if (armarioAleato < 1 || armarioAleato > 8) {
+                        printf("Número de armário inválido\n");
+                    } else if (armario & (1 << (armarioAleato - 1))) {
+                        armario &= ~(1 << (armarioAleato - 1));
+                        printf("Armário %d foi liberado\n", armarioAleato);
+                    } else {
+                        printf("Armário %d já está livre\n", armarioAleato);
+                    }
+                }
+      
+    break;
+
+    case 3: // Saida do Codigo
+puts("Saida com sucesso, Obrigado!");
+    break;
+    default:
+    puts("Escolha invalida!");
+  }
+  }while(menu != 3);
+
+  return 0;
+}
